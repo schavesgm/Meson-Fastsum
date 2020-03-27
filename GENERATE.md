@@ -4,13 +4,6 @@ author: Sergio Chaves García-Mascaraque
 geometry: "left=3cm, right=3cm"
 ---
 
-# `To dos`
-
-> - [ ] -> Calculate the plost with `Est mass` for all channels. \
-> - [ ] -> Quantify the difference between cosh-mass and fit-mass. \
-> - [ ] -> Quantify where the plateau starts. \
-> - [ ] -> Reformat the histogramming procedure.
-
 # Description
 
 This folder contains scripts and results to study the validity of a
