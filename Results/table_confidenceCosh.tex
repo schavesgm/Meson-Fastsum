@@ -1,0 +1,532 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsmath}              % Math symbols
+\usepackage{dsfont}               % Identity symbol
+\usepackage[table,xcdraw]{xcolor} % Table colors
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage[labelfont = bf]{caption}
+\usepackage{float}
+
+\usepackage[a4paper,margin=0.5in,landscape]{geometry}
+\usepackage{booktabs}
+
+% User commands
+% Define local-local and smeared-smeared
+\newcommand{\loq}{{\color[HTML]{006600}{ll}}}
+\newcommand{\lon}{{\color[HTML]{800080}{ll}}}
+\newcommand{\smq}{{\color[HTML]{006600}{ss}}}
+\newcommand{\smn}{{\color[HTML]{800080}{ss}}}
+
+% Define rule separators colours
+\newcommand{\rrule}{{\color{red}\vrule}}
+
+% Cell colours
+\newcommand{\rcell}{\cellcolor[HTML]{F7CB4A}}
+\newcommand{\ocell}{\cellcolor[HTML]{FBAFB5}}
+\newcommand{\gcell}{\cellcolor[HTML]{92D2D6}}
+
+
+\begin{document}
+
+\begin{table}[H]
+    \centering
+    \Large
+    \caption{
+        Table containing the trustworthiness of the hyperbolic cosine
+        ansatz in the mesonic sector. The calculation has been
+        carried out in all available channels, defined by the states
+        $0^{++}, 0^{+-}, 1^{--}, 1^{++}, 1^{+-}$. We define our
+        confidence in the ansatz by comparing the mass obtained
+        solving the hyperbolic cosine equation and the sliding window
+        fit results. A {\color[HTML]{92D2D6}{blue cell}} means that
+        both results are compatible, that is, between errors, the
+        result obtained from solving the cosh and the sliding window
+        calculation are compatible. Moreover, a clear plateau has to
+        be present. A  {\color[HTML]{92D2D6}{blue cell}} cell can be
+        trusted. A {\color[HTML]{FBAFB5}{pink cell}} denotes
+        \textit{proceed with caution}, which means that a plateau is
+        present but with few points defining it. In this case, the
+        cosh-mass and the sliding window mass differ but the
+        difference is \textit{small by eye}. A
+        {\color[HTML]{F7CB4A}{yellow cell}} means that both masses
+        are not compatible and no plateau is clear.  Besides, for
+        each temperature and flavour, there are two results. One
+        corresponding to local-local sources, denoted by \textit{ll}
+        (left hand side), the other to smeared-smeared \textit{ss}
+        (right hand side).  Provided that in a given temperature both
+        text colours \textit{ll} and \textit{ss} have this
+        combination of colours \loq = \smq, then both sources
+        converge to the same mass. If both colours are different in
+        the following sequence \loq, \smn, then they differ but the
+        difference is \textit{small}.  If both colours are different,
+        \lon = \smn, then both methods generate different sources.
+        The results extracted are defined subjectively, but they can
+        serve as a guide for following actions. Check the plots
+        attached with the data from which these results were
+        generated.
+    }
+    \vspace{0.5cm}
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{@{}cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc@{}}
+        & & \multicolumn{22}{c}{$N_\tau$} \\
+        \midrule
+        & 
+        & \multicolumn{2}{c}{$128$}
+        & \multicolumn{2}{c}{$64$} 
+        & \multicolumn{2}{c}{$56$} 
+        & \multicolumn{2}{c}{$48$} 
+        & \multicolumn{2}{c}{$40$} 
+        & \multicolumn{2}{c}{$36$} 
+        & \multicolumn{2}{c}{$32$} 
+        & \multicolumn{2}{c}{$28$} 
+        & \multicolumn{2}{c}{$24$} 
+        & \multicolumn{2}{c}{$20$} 
+        & \multicolumn{2}{c}{$16$} \\
+
+        % Pseudoscalar
+        \multirow{6}{*}{$\gamma_5 \equiv 0^{+-}$} 
+        & $uu$ 
+        & \gcell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smq % 64
+        & \gcell\loq&\gcell\smq % 56
+        & \gcell\loq&\gcell\smq % 48
+        & \gcell\loq&\gcell\smq % 40
+        & \gcell\loq&\gcell\smn % 36
+        & \gcell\loq&\gcell\smn % 32
+        & \gcell\lon&\gcell\smn % 28
+        & \ocell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\ 
+        & $us$
+        & \gcell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smq % 64
+        & \gcell\loq&\gcell\smq % 56
+        & \gcell\loq&\gcell\smq % 48
+        & \gcell\loq&\gcell\smq % 40
+        & \gcell\loq&\gcell\smn % 36
+        & \gcell\loq&\gcell\smq % 32
+        & \gcell\lon&\gcell\smn % 28
+        & \ocell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\ 
+        & $uc$
+        & \gcell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smq % 64
+        & \gcell\loq&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\
+        & $ss$
+        & \gcell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smq % 64
+        & \gcell\loq&\gcell\smq % 56
+        & \gcell\loq&\gcell\smn % 48
+        & \gcell\loq&\gcell\smn % 40
+        & \gcell\lon&\gcell\smn % 36
+        & \gcell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \ocell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\
+        & $sc$
+        & \gcell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smq % 64
+        & \gcell\loq&\gcell\smq % 56
+        & \gcell\loq&\gcell\smn % 48
+        & \gcell\loq&\gcell\smn % 40
+        & \gcell\lon&\gcell\smn % 36
+        & \gcell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\
+        & $cc$
+        & \gcell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smq % 64
+        & \gcell\loq&\gcell\smq % 56
+        & \gcell\loq&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \gcell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\
+        \midrule
+
+        % Vector
+        \multirow{6}{*}{$\gamma_\mu \equiv 1^{--}$} 
+        & $uu$ 
+        & \ocell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smq % 64
+        & \gcell\loq&\gcell\smq % 56
+        & \gcell\loq&\gcell\smq % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\ 
+        & $us$ 
+        & \gcell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smq % 64
+        & \gcell\loq&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\ 
+        & $uc$ 
+        & \gcell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smn % 64
+        & \gcell\loq&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \ocell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\ 
+        & $ss$ 
+        & \gcell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smq % 64
+        & \gcell\loq&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\ 
+        & $sc$ 
+        & \gcell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smn % 64
+        & \gcell\loq&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\ 
+        & $cc$ 
+        & \gcell\loq&\gcell\smq % 128 
+        & \gcell\loq&\gcell\smn % 64
+        & \gcell\loq&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \gcell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\ 
+        \midrule
+
+        % Axial Plus
+        \multirow{6}{*}{$\gamma_\mu\gamma_5 \equiv 1^{++}$} 
+        & $uu$ 
+        & \ocell\loq&\ocell\smq % 128 
+        & \gcell\loq&\gcell\smq % 64
+        & \gcell\loq&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \gcell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \ocell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\ 
+        & $us$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \gcell\loq&\gcell\smn % 64
+        & \gcell\loq&\gcell\smn % 56
+        & \gcell\loq&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \gcell\lon&\gcell\smn % 36
+        & \gcell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \ocell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\ 
+        & $uc$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \gcell\loq&\gcell\smn % 64
+        & \gcell\lon&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\ocell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\ 
+        & $ss$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \gcell\loq&\gcell\smn % 64
+        & \gcell\lon&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \rcell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \ocell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\ 
+        & $sc$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \gcell\lon&\gcell\smn % 64
+        & \gcell\lon&\ocell\smn % 56
+        & \gcell\lon&\ocell\smn % 48
+        & \ocell\lon&\ocell\smn % 40
+        & \ocell\lon&\ocell\smn % 36
+        & \ocell\lon&\ocell\smn % 32
+        & \ocell\lon&\ocell\smn % 28
+        & \rcell\lon&\ocell\smn % 24
+        & \rcell\lon&\ocell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\ 
+        & $cc$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \gcell\lon&\ocell\smn % 64
+        & \gcell\lon&\ocell\smn % 56
+        & \ocell\lon&\ocell\smn % 48
+        & \ocell\lon&\rcell\smn % 40
+        & \rcell\lon&\rcell\smn % 36
+        & \rcell\lon&\rcell\smn % 32
+        & \rcell\lon&\rcell\smn % 28
+        & \rcell\lon&\rcell\smn % 24
+        & \rcell\lon&\rcell\smn % 20
+        & \rcell\lon&\rcell\smn % 16
+        \\ 
+        \midrule
+        % $\gamma_5 \equiv 0^{+-}$ \\
+        % $\gamma_\mu \equiv 1^{--}$ \\
+        % $\gamma_\mu\gamma_5 \equiv 1^{++}$ \\
+        % $\gamma_i\gamma_j \equiv 1^{-+}$ \\
+    \end{tabular}
+    \end{adjustbox}
+\end{table}
+
+\newpage
+% Second part of the table
+
+\begin{table}[t]
+    \centering
+    \Large
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{@{}cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc@{}}
+        & & \multicolumn{22}{c}{$N_\tau$} \\
+        \midrule
+        & 
+        & \multicolumn{2}{c}{$128$}
+        & \multicolumn{2}{c}{$64$} 
+        & \multicolumn{2}{c}{$56$} 
+        & \multicolumn{2}{c}{$48$} 
+        & \multicolumn{2}{c}{$40$} 
+        & \multicolumn{2}{c}{$36$} 
+        & \multicolumn{2}{c}{$32$} 
+        & \multicolumn{2}{c}{$28$} 
+        & \multicolumn{2}{c}{$24$} 
+        & \multicolumn{2}{c}{$20$} 
+        & \multicolumn{2}{c}{$16$} \\
+
+        % Axial minus
+        \multirow{6}{*}{$\gamma_i\gamma_j \equiv 1^{+-}$} 
+        & $uu$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \ocell\lon&\ocell\smn % 64
+        & \gcell\lon&\gcell\smn % 56
+        & \gcell\loq&\gcell\smn % 48
+        & \ocell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \ocell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\
+        & $us$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \gcell\lon&\gcell\smn % 64
+        & \gcell\lon&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \ocell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \ocell\lon&\gcell\smn % 24
+        & \rcell\lon&\gcell\smn % 20
+        & \rcell\lon&\gcell\smn % 16
+        \\
+        & $uc$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \gcell\lon&\gcell\smn % 64
+        & \ocell\lon&\gcell\smn % 56
+        & \gcell\lon&\ocell\smn % 48
+        & \ocell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \ocell\lon&\gcell\smn % 24
+        & \rcell\lon&\ocell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\
+        & $ss$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \gcell\lon&\gcell\smn % 64
+        & \ocell\lon&\ocell\smn % 56
+        & \ocell\lon&\ocell\smn % 48
+        & \ocell\lon&\gcell\smn % 40
+        & \ocell\lon&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\ocell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\
+        & $sc$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \ocell\lon&\ocell\smn % 64
+        & \ocell\lon&\ocell\smn % 56
+        & \ocell\lon&\ocell\smn % 48
+        & \ocell\lon&\gcell\smn % 40
+        & \rcell\lon&\ocell\smn % 36
+        & \rcell\lon&\ocell\smn % 32
+        & \rcell\lon&\ocell\smn % 28
+        & \rcell\lon&\ocell\smn % 24
+        & \rcell\lon&\ocell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\
+        & $cc$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \gcell\lon&\ocell\smn % 64
+        & \ocell\lon&\ocell\smn % 56
+        & \ocell\lon&\rcell\smn % 48
+        & \ocell\lon&\rcell\smn % 40
+        & \ocell\lon&\rcell\smn % 36
+        & \rcell\lon&\rcell\smn % 32
+        & \rcell\lon&\rcell\smn % 28
+        & \rcell\lon&\ocell\smn % 24
+        & \rcell\lon&\ocell\smn % 20
+        & \rcell\lon&\rcell\smn % 16
+        \\
+        \midrule
+
+        % Axial minus
+        \multirow{6}{*}{$\mathds{1} \equiv 0^{++}$} 
+        & $uu$ 
+        & \rcell\loq&\rcell\smn % 128 
+        & \rcell\loq&\gcell\smn % 64
+        & \ocell\loq&\gcell\smn % 56
+        & \gcell\loq&\gcell\smn % 48
+        & \ocell\loq&\gcell\smn % 40
+        & \ocell\loq&\ocell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\ocell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\
+        & $us$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \ocell\loq&\ocell\smn % 64
+        & \ocell\loq&\ocell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \ocell\loq&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \ocell\lon&\gcell\smn % 24
+        & \rcell\lon&\ocell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\
+        & $uc$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \ocell\loq&\gcell\smn % 64
+        & \gcell\lon&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \ocell\loq&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \rcell\lon&\gcell\smn % 24
+        & \rcell\lon&\ocell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\
+        & $ss$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \ocell\loq&\ocell\smn % 64
+        & \gcell\loq&\gcell\smn % 56
+        & \gcell\lon&\gcell\smn % 48
+        & \gcell\lon&\gcell\smn % 40
+        & \ocell\loq&\gcell\smn % 36
+        & \ocell\lon&\gcell\smn % 32
+        & \ocell\lon&\gcell\smn % 28
+        & \ocell\lon&\gcell\smn % 24
+        & \rcell\lon&\ocell\smn % 20
+        & \rcell\lon&\ocell\smn % 16
+        \\
+        & $sc$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \ocell\lon&\gcell\smn % 64
+        & \gcell\loq&\gcell\smn % 56
+        & \ocell\lon&\ocell\smn % 48
+        & \ocell\lon&\ocell\smn % 40
+        & \rcell\loq&\ocell\smn % 36
+        & \rcell\lon&\ocell\smn % 32
+        & \rcell\lon&\ocell\smn % 28
+        & \rcell\lon&\ocell\smn % 24
+        & \rcell\lon&\rcell\smn % 20
+        & \rcell\lon&\rcell\smn % 16
+        \\
+        & $sc$ 
+        & \ocell\loq&\ocell\smn % 128 
+        & \gcell\lon&\ocell\smn % 64
+        & \ocell\lon&\rcell\smn % 56
+        & \ocell\lon&\rcell\smn % 48
+        & \ocell\lon&\rcell\smn % 40
+        & \rcell\loq&\rcell\smn % 36
+        & \rcell\lon&\rcell\smn % 32
+        & \rcell\lon&\rcell\smn % 28
+        & \rcell\lon&\rcell\smn % 24
+        & \rcell\lon&\rcell\smn % 20
+        & \rcell\lon&\rcell\smn % 16
+        \\
+        \bottomrule
+
+    \end{tabular}
+    \end{adjustbox}
+\end{table}
+
+\end{document}
+
