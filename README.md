@@ -8,7 +8,7 @@ Clear documentation about this repository is shown inside the file
 
 # To-do list
 
-> - [x] -> Calculate the plost with `Est mass` for all channels. \
+> - [x] -> Calculate the plots with `Est mass` for all channels. \
 > - [ ] -> Quantify the difference between cosh-mass and fit-mass. \
 > - [ ] -> Quantify where the plateau starts. \
 > - [ ] -> Rethink the procedure to generate the estimation on the
