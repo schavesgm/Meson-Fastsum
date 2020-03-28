@@ -1,14 +1,20 @@
 #!/bin/bash
 
+channel="g5"
 NT=( 128 64 56 48 40 36 32 28 24 20 16 )
-MESON=( uu us uc ss sc cc )
+MESON=( uu ) # us uc ss sc cc )
+
+mkdir -p conf_test
+ROOT=$( pwd )
 
 for meson in ${MESON[@]}; do
     
     echo "I am inside ${meson}"
+    echo "# N_t Cell_ll Plat_ll Cell_ss Plat_ss" > \
+        ./conf_test/conf_${channel}_${meson}.dat
+
     for nt in ${NT[@]}; do
 
-        echo "I am inside ${nt}"
         # Move into the directory
         cp ./diff_calc.py ${meson}/${nt}/
         cd ${meson}/${nt}
@@ -26,12 +32,13 @@ for meson in ${MESON[@]}; do
         res_ss=($( 
             python ./diff_calc.py ${file_eff_ss} ${file_fit_ss}
         ))
-        echo "ll" ${res_ll[@]}
-        echo "ss" ${res_ss[@]}
+        ll_part="${res_ll[0]} ${res_ll[1]}"
+        ss_part="${res_ss[0]} ${res_ss[1]}"
+        echo "${nt} ${ll_part} ${ss_part}" >> \
+            ${ROOT}/conf_test/conf_${channel}_${meson}.dat
 
         rm ./diff_calc.py
         cd ../../
         
     done
-    break
 done

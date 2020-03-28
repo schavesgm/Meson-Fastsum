@@ -37,18 +37,14 @@ def points_interval( data_num, data_den, thresh = [0.2, 0.1] ):
     return len( points )
 
 
-def index_startplat( data, thresh = 0.2 ):
+def index_startplat( data, thresh = 0.01 ):
     '''
     Function to obtain the start of a plateau given some data. The
     index is calculated using the following procedure,
-    1. We calculate the average ratio from one point to all the
-    consecutive ones, that's it
-        rat[i] = ( 1 / N ) * \sum_{j=i+1}^{N} data[i] / data[j]
-    2. We define the plateau as the first point such that the average
-    ratio is a distance of 'thres' from the consecutive ones. If
-    'thres' is 0.2 then the plateau will start at the first point
-    such that its average ratio with all the consecutive ones holds,
-                    0.80 <= rat[i] <= 1.20
+    1. We calculate the slope of each point by using,
+                    slope[i] = data[i+1] - data[i]
+    2. We define the plateau as the first point such that the slope
+    is smaller than a threshold percentage. Default is 1%.
 
     Arguments:
         data ( numpy array ):
@@ -64,15 +60,15 @@ def index_startplat( data, thresh = 0.2 ):
     '''
     assert( thresh > 0 )
 
-    avg_ratio = np.empty( data.shape[0] - 1 )
+    # Calculate the slope on each point
+    slope = np.empty( data.shape[0] - 1 )
     for i in range( data.shape[0] - 1 ):
-        avg_ratio[i] = \
-            abs( np.mean( data[i] / data[i+1:] ) )
+        slope[i] = data[i+1] - data[i]
 
     plat_init = None
-    for index, value in enumerate( avg_ratio, 1 ):
+    for index, value in enumerate( slope, 1 ):
         # This is the definition of the plateau
-        if 1 - thresh <= value <= 1 + thresh:
+        if abs( value ) <= thresh:
             plat_init = index
             break
 
@@ -81,8 +77,8 @@ def index_startplat( data, thresh = 0.2 ):
 
     return plat_init
 
-def decide_color( data_eff, data_fit, thresh = [0.20, 0.25],
-        green = [0.3, 0.35], orange = [0.2,0.2] ):
+def decide_color( data_eff, data_fit, thresh = [0.20, 0.005],
+        green = [0.4, 0.4], orange = [0.20,0.15] ):
     
     '''
     Function to trustworthiness of the data. The trustworthiness is
@@ -114,7 +110,7 @@ def decide_color( data_eff, data_fit, thresh = [0.20, 0.25],
     frac_ratio = num_points / data_fit.shape[0]
     frac_plat_fit = ( size_fit - plat_fit ) / size_fit
 
-    #print( frac_ratio, frac_plat_fit )
+    # print( frac_ratio, frac_plat_fit )
     col = choose_color( frac_ratio, frac_plat_fit, green, orange )
 
     return col, plat_fit
