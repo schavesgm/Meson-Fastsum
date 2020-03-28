@@ -77,12 +77,12 @@ def index_startplat( data, thresh = 0.2 ):
             break
 
     if plat_init is None:
-        plat_init = 0
+        plat_init = data.shape[0]
 
     return plat_init
 
-def decide_color( data_eff, data_fit, thresh = [0.15, 0.10],
-        green = [0.3, 0.35], orange = 0.20 ):
+def decide_color( data_eff, data_fit, thresh = [0.20, 0.25],
+        green = [0.3, 0.35], orange = [0.2,0.2] ):
     
     '''
     Function to trustworthiness of the data. The trustworthiness is
@@ -113,11 +113,12 @@ def decide_color( data_eff, data_fit, thresh = [0.15, 0.10],
 
     frac_ratio = num_points / data_fit.shape[0]
     frac_plat_fit = ( size_fit - plat_fit ) / size_fit
-    print( plat_fit, frac_plat_fit, green[1] )
 
     #print( frac_ratio, frac_plat_fit )
-    choose_color( frac_ratio, frac_plat_fit, green, orange )
-    pass
+    col = choose_color( frac_ratio, frac_plat_fit, green, orange )
+
+    return col, plat_fit
+
 
 def choose_color( frac_ratio, frac_plat, green, orange ):
     '''
@@ -135,16 +136,15 @@ def choose_color( frac_ratio, frac_plat, green, orange ):
     # assert( green > 0 and orange > 0 )
     # assert( orange < green )
 
-    # if frac_ratio >= green[0]: # and frac_plat >= green[1]:
     if frac_ratio >= green[0] and frac_plat >= green[1]: 
-        print( 'GREEN' )
+        colour = 'G'
+    elif orange[0] <= frac_ratio < green[0] and \
+         orange[1] <= frac_plat < green[1]:
+        colour = 'O'
     else:
-        print( 'NOT GREEN' ) 
-    # elif orange <= frac_ratio <= green[0] and \
-    #         orange <= frac_plat <= green[0]:
-    #     print( 'It is an orange' )
-    # else:
-    #     print( 'It is a red' )
+        colour = 'R'
+
+    return colour
 
 # Get the files
 eff_file = sys.argv[1]
@@ -153,7 +153,5 @@ fit_file = sys.argv[2]
 data_eff = np.loadtxt( eff_file, skiprows = 1 )
 data_fit = np.loadtxt( fit_file )
 
-# points_interval( data_eff[1:,1], data_fit[:,1] )
-# print( index_startplat( data_eff[:,1] ) )
-# print( points_interval( data_eff[1:,1], data_fit[:,1] ) )
-decide_color( data_eff[1:,1], data_fit[:,1] )
+col, plat_fit =  decide_color( data_eff[1:,1], data_fit[:,1] )
+print( col, plat_fit )
