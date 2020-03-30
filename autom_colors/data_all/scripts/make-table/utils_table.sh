@@ -76,42 +76,149 @@ echo "
 
 function print_caption() {
 # Print the caption and initialise the table
+
+# Variables of the system
+thresh_eq=$2; perc_data=$3
+thresh_int=$4; thresh_plt=$5
+green_0=$6; green_1=$7
+orange_0=$8; orange_1=$9
+
+# Print the caption
 echo "
-\\vspace*{\\fill}
-\Large
-\\textbf{Table 1: } Table containing the trustworthiness of the hyperbolic cosine
-ansatz in the mesonic sector. The calculation has been
-carried out in all available channels, defined by the states
-\$0^{++}, 0^{+-}, 1^{--}, 1^{++}, 1^{+-}\$. We define our
-confidence in the ansatz by comparing the mass obtained
-solving the hyperbolic cosine equation and the sliding window
-fit results. A {\\color[HTML]{92D2D6}{blue cell}} means that
-both results are compatible, that is, between errors, the
-result obtained from solving the cosh and the sliding window
-calculation are compatible. Moreover, a clear plateau has to
-be present. A {\\color[HTML]{92D2D6}{blue cell}} cell can be
-trusted. A {\\color[HTML]{FBAFB5}{pink cell}} denotes
-\\textit{proceed with caution}, which means that a plateau is
-present but with few points defining it. In this case, the
-cosh-mass and the sliding window mass differ but the
-difference is \\textit{small by eye}. A
-{\\color[HTML]{F7CB4A}{yellow cell}} means that both masses
-are not compatible and no plateau is clear.  Besides, for
-each temperature and flavour, there are two results. One
-corresponding to local-local sources, denoted by \\textit{ll}
-(left hand side), the other to smeared-smeared \\textit{ss}
-(right hand side).  Provided that in a given temperature both
-text colours \\textit{ll} and \\textit{ss} have this
-combination of colours \\loq = \\smq, then both sources
-converge to the same mass. If both colours are different in
-the following sequence \\loq, \\smn, then they differ but the
-difference is \\textit{small}.  If both colours are different,
-\\lon = \\smn, then both methods generate different sources.
-The results extracted are defined subjectively, but they can
-serve as a guide for following actions. Check the plots
-attached with the data from which these results were
-generated.
-\\vfill
+\\textbf{Automatic table: } Table containing the estimation of the
+trustworthiness in the mesonic sector data for the FASTSUM
+collaboration when using an hyperbolic cosine ansatz. The table below
+collects the results for all possible channels available \$\{ 0^{++},
+0^{+-}, 1^{--}, 1^{++}, 1^{+-}\}\$, all flavour structures available
+\$\{ uu, us, uc, ss, sc, cc \}\$, all temperatures and choices of
+sources. The sources available are \\textit{local-local} (ll) and
+\\textit{smeared-smeared} (ss).
+
+\\noindent A selected row and column in the table below corresponds
+to a temperature (column) and a channel/flavour structure (row). For
+each temperature and channel/flavour structure, there are two cells,
+the left one corresponds to local-local sources (ll) and the right
+one corresponds to smeared-smeared (ss).
+
+\\noindent For each cell, we do have two kinds of data. One of them
+is the \\textit{effective mass}, which is the mass solution of this
+equation,
+\\begin{equation}
+    \\frac{\\cosh\\Big( m \\cdot ( \\tau - N_\\tau / 2 ) \\Big)}
+         {cosh\\Big( m 
+             \\cdot ( \\tau + a_\\tau - N_\\tau / 2 ) \\Big)} =
+    \\frac{C(\\tau)}{C(\\tau + a_\\tau)}.
+\\end{equation}
+\\noindent The other one is a fitted mass corresponding to a
+\\textit{sliding window fit}. This means that we start at a given
+Euclidean time \$\\tau_0\$ and we fit over the range, \$[\\tau_0,
+N_\\tau - \\tau_0]\$. The following window will be the one
+corresponding to shrinking by one lattice spacing the previous
+window, \$\\tau_0 \\to \\tau_0 + a_\\tau\$  and \$N_\\tau - \\tau_0
+\\to N_\\tau - \\tau_0 - a_\\tau\$.
+
+\\noindent The colour of the cell, the colour of each text (ll/ss)
+and the number inside parenthesis are defined as,
+\\begin{enumerate}
+\\item The colour of the cell is defined by a combination of how
+similar the effective mass and the sliding window mass are and how
+many points of the total belong to a plateau.
+\\item The number inside parenthesis is the Euclidean time \$\\tau\$
+in which the plateau starts.
+\\item If two adjacent ll/ss have colours \\loq/\\smq, then
+ll and ss for that row and column are compatible. If they have
+colours \\lon/\\smn, then they are not compatible.
+\\end{enumerate}
+
+\\noindent The algorithm to set the plateau is the following (Alg 1):
+\\begin{enumerate}
+\\item We calculate the slope of each point by using,
+    \\begin{equation}
+        m(\\tau_i) = m(\\tau_i + 1) - m(\\tau_i)
+    \\end{equation}
+\\item The plateau is the first point such that,
+    \\begin{equation}
+        | m(\\tau_i) | \\leq ${thresh_plt} 
+    \\end{equation}
+\\end{enumerate}
+
+\\noindent The algorithm to set how close the effective mass and the
+fitted mass are is the following (Alg 2):
+\\begin{enumerate}
+\\item We calculate the ratio at each point between the effective
+mass and the fitted mass,
+    \\begin{equation}
+        R(\\tau_i) = \\frac{m_{eff}(\\tau_i)}{m_{fit}(\\tau_i)}
+    \\end{equation}
+\\item We calculate the beginning of the plateau using the algorithm
+above.
+\\item We collect all points that hold,
+    \\begin{equation}
+        1 - ${thresh_int} \\leq R(\\tau_i) \\leq 1 + ${thresh_int}
+        \\quad
+        \\text{and}
+        \\quad
+        \\ \\tau_i - P \\leq -2,
+    \\end{equation}
+    where P is the index of the plateau. It is calculated using a
+    threshold of ${thresh_plt}.
+\\end{enumerate}
+
+\\noindent The algorithm to define if local-local and smeared-smeared
+are equal for a given row/column is the following (Alg 3):
+\\begin{enumerate}
+\\item  We calculate the ratio for each time using,
+    \\begin{equation}
+        \\hat{R}(\\tau_i) = 
+            \\frac{m^{ll}_{fit}(\\tau_i)}{m^{ss}_{fit}(\\tau_i)}
+    \\end{equation}
+\\item We select a percentage of the data. In particular the
+\$${perc_data}\\%\$. 
+\\item They are equal if the following statement is true,
+    \\begin{equation}
+        1 - ${thresh_eq} \\leq | \\sum_{i =
+        ${perc_data}N_\\tau}^{N_\\tau/2} \\hat{R}(\\tau_i)) \\leq 
+        1 + ${thresh_eq}.
+    \\end{equation}
+\\end{enumerate}
+
+\\noindent Now, the colour-code of the cells will be explained. A
+{\\color[HTML]{92D2D6}{blue cell}} means that the fraction of points
+that are compatible between the effective mass and the fitted
+mass fulfills,
+\\begin{equation}
+    N \\geq ${green_0} \\cdot \\frac{N_\\tau}{2},
+\\end{equation}
+where \$N\$ is the number of points result of (Alg 2). Moreover, the
+remaining points after the definition of the plateau by (Alg 1) has
+to fullfil,
+\\begin{equation}
+    ( 1 - \\frac{P}{N_\\tau/2} ) \\geq ${green_1}.
+\\end{equation}
+\\noindent A {\\color[HTML]{92D2D6}{blue cell}} cell can be trusted
+in our definition. A {\\color[HTML]{FBAFB5}{pink cell}} denotes
+\\textit{proceed with caution}. A {\\color[HTML]{FBAFB5}{pink cell}}
+means that the number of points compatible between the effective mass
+and the fitted mass belong to the following interval,
+\\begin{equation}
+    ${orange_0} \\cdot \\frac{N_\\tau}{2}\\leq N 
+        \\leq ${green_0} \\cdot \\frac{N_\\tau}{2}.
+\\end{equation}
+\\noindent Besides, the number of points after the definition of the
+plateau belong to the following interval,
+\\begin{equation}
+    ${orange_1} \\leq ( 1 - \\frac{P}{N_\\tau/2} ) \\leq ${green_1}.
+\\end{equation}
+
+\\noindent A {\\color[HTML]{F7CB4A}{yellow cell}} means the fraction
+of effective mass and sliding fit points belong to,
+\\begin{equation}
+    N \\leq \\frac{N_\\tau}{2} \\cdot ${orange_0}.
+\\end{equation}
+The same for the plateau,
+\\begin{equation}
+    ( 1 - \\frac{P}{N_\\tau/2} ) \\leq ${orange_1}.
+\\end{equation}
 \\newpage
 " >> $1
 }
