@@ -3,6 +3,15 @@
 channel=$1
 ROOT_MASTER=$2
 
+# Parameters 
+# Equal or not parameters
+p0=$3; p1=$4
+
+# Decide color parameters
+p2=$5; p3=$6
+p4=$7; p5=$8
+p6=$9; p7=${10}
+
 # Iterate through NT and mesons
 NT=( 128 64 56 48 40 36 32 28 24 20 16 )
 MESON=( uu us uc ss sc cc )
@@ -35,10 +44,13 @@ for meson in ${MESON[@]}; do
         file_fit_ss=$( ls cleanfit_ss* )
 
         # Call the python script
-        res=($( 
-            python ./diff_calc.py ${file_eff_ll} ${file_fit_ll} \
-                ${file_eff_ss} ${file_eff_ss}
-        ))
+        files_ll="${file_fit_ll} ${file_eff_ll}"
+        files_ss="${file_fit_ss} ${file_eff_ss}"
+        files="${files_ll} ${files_ss} "
+        
+        params="$p0 $p1 $p2 $p3 $p4 $p5 $p6 $p7"
+
+        res=($( python ./diff_calc.py -f $files -p $params ))
         ll_part="${res[0]} ${res[1]}"
         ss_part="${res[2]} ${res[3]}"
 
