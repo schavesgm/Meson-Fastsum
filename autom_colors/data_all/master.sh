@@ -48,7 +48,7 @@ table_file="TABLES/table_${name_table}.tex"
 
 # Initialise table file
 print_header ${table_file}
-print_caption ${table_file}
+print_caption ${table_file} $p0 $p1 $p2 $p3 $p4 $p5 $p6 $p7 
 
 # First page of the table file
 
