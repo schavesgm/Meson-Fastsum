@@ -1,8 +1,8 @@
-import sys
+import sys, argparse 
 import numpy as np
 import matplotlib.pyplot as plt
 
-def equal_or_not( data_ll, data_ss, thresh = 0.2 ):
+def equal_or_not( data_ll, data_ss, thresh = 0.2, perc_data = 0.5 ):
     ''' 
     Function to check if the data corresponding to ll and ss converge
     to the same value with some threshold. The data corresponds to
@@ -14,6 +14,8 @@ def equal_or_not( data_ll, data_ss, thresh = 0.2 ):
         data_ss ( np.array ):
             Array containing the data for the smeared smeared 
             sources.
+        perc_data ( float ) [optional]:
+            Percentage of the data to process.
         thresh ( float ) [optional]:
             Threshold that we accept to be equal, which means,
                         abs( ratio ) <= 1 + thresh
@@ -22,12 +24,16 @@ def equal_or_not( data_ll, data_ss, thresh = 0.2 ):
             Returns a zero if they are not equal, a one if they are
             equal.
     '''
+    
+    # Catch errors
+    assert( type( thresh ) is float and 0 < thresh < 1 )
+    assert( type( perc_data ) is float and 0 < perc_data < 1 )
 
     # Calculate the ratio among the data -- element-wise
     ratio = abs( data_ll / data_ss )
 
     # Check the average of the data
-    begin_count = int( ratio.shape[0] / 2 )
+    begin_count = int( perc_data * ratio.shape[0] )
     yes_no = 1 - thresh <= abs( np.mean( ratio[begin_count:] ) ) \
         <= 1 + thresh
 
@@ -89,7 +95,7 @@ def index_startplat( data, thresh = 0.01 ):
             found, an index 0 will be returned -> There is no clear
             plateau in this data.
     '''
-    assert( thresh > 0 )
+    assert( type(thresh) is float and 0 < thresh < 1 )
 
     # Calculate the slope on each point
     slope = np.empty( data.shape[0] - 1 )
@@ -126,6 +132,13 @@ def decide_color( data_eff, data_fit, thresh = [0.20, 0.01],
             len(data) - index_plateau  / len(data) > green_plat
     '''
     
+    assert( 0 < thresh[0] < 1 )
+    assert( 0 < thresh[1] < 1 )
+    assert( 0 < green[0] < 1 )
+    assert( 0 < green[0] < 1 )
+    assert( 0 < orange[0] < 1 )
+    assert( 0 < orange[1] < 1 )
+
     thresh_int, thresh_plt = thresh
 
     # Sizes 
@@ -174,44 +187,87 @@ def choose_color( frac_ratio, frac_plat, green, orange ):
     return colour
 
 
-# Get file names
-fit_file_ll = sys.argv[1] 
-fit_file_ss = sys.argv[2] 
-eff_file_ll = sys.argv[3] 
-eff_file_ss = sys.argv[4] 
+if __name__ == '__main__':
 
-# Load the ll files
-data_eff_ll = np.loadtxt( eff_file_ll, skiprows = 1 )
-data_fit_ll = np.loadtxt( fit_file_ll )
+    msg_params = """
+    Parameters used to create the data. They set how you define
+    your confidence on the data. Changing them will affect the 
+    generated table.
+    """
+    msg_file = """
+    Files to be processed. The following order is mandatory,
+        file_eff_ll, file_fit_ll, file_eff_ss, file_fit_ss
+    """
+    parser = argparse.ArgumentParser( 
+        description = 'Parameters for the calculation.' )
+    parser.add_argument( '--params', '-p', type = float,
+        nargs = '+', help = msg_params
+    )
+    parser.add_argument( '--files', '-f', type = str,
+        nargs = '+', help = msg_file
+    )
+    args = parser.parse_args()
 
-# Clean the data for ll
-init_fit, end_fit = int( data_fit_ll[0,0] ), int( data_fit_ll[-1,0] )
-data_eff_ll = data_eff_ll[init_fit:end_fit+1,:]
+    # Equal or not parameters
+    p_equal_thresh = args.params[0]
+    p_equal_perc = args.params[1]
 
-# Load the ss files
-data_eff_ss = np.loadtxt( eff_file_ss, skiprows = 1 )
-data_fit_ss = np.loadtxt( fit_file_ss )
+    # Decide color parameters
+    p_decid_thresh = \
+        [ args.params[2], args.params[3] ]
+    p_decid_green = \
+        [ args.params[4], args.params[5] ]
+    p_decid_orange = \
+        [ args.params[6], args.params[7] ]
 
-# Clean the data for ll
-init_fit, end_fit = int( data_fit_ss[0,0] ), int( data_fit_ss[-1,0] )
-data_eff_ss = data_eff_ss[init_fit:end_fit+1,:]
+    # Get file names
+    fit_file_ll = args.files[0]
+    eff_file_ll = args.files[1]
+    fit_file_ss = args.files[2]
+    eff_file_ss = args.files[3]
 
-# Decide the color for both values
-col_ll, plat_fit_ll =  \
-    decide_color( data_eff_ll[:,1], data_fit_ll[:,1] )
-
-col_ss, plat_fit_ss =  \
-    decide_color( data_eff_ss[:,1], data_fit_ss[:,1] )
-
-# Decide whether ll and ss are equal or not
-
-# Clean the data for both files
-init = int( max( data_fit_ll[0,0], data_fit_ss[0,0] ) )
-end = int( min( data_fit_ll[-1,0], data_fit_ss[-1,0] ) )
-
-data_fit_ss = data_fit_ss[init:end,:]
-data_fit_ll = data_fit_ll[init:end,:]
-
-yes_no = equal_or_not( data_fit_ll[:,1], data_fit_ss[:,1] )
-
-print( col_ll, plat_fit_ll, col_ss, plat_fit_ss, yes_no )
+    # Load the ll files
+    data_eff_ll = np.loadtxt( eff_file_ll, skiprows = 1 )
+    data_fit_ll = np.loadtxt( fit_file_ll )
+    
+    # Clean the data for ll
+    init_fit, end_fit = \
+        int( data_fit_ll[0,0] ), int( data_fit_ll[-1,0] )
+    data_eff_ll = data_eff_ll[init_fit:end_fit+1,:]
+    
+    # Load the ss files
+    data_eff_ss = np.loadtxt( eff_file_ss, skiprows = 1 )
+    data_fit_ss = np.loadtxt( fit_file_ss )
+    
+    # Clean the data for ll
+    init_fit, end_fit = \
+        int( data_fit_ss[0,0] ), int( data_fit_ss[-1,0] )
+    data_eff_ss = data_eff_ss[init_fit:end_fit+1,:]
+    
+    # Decide the color for both values
+    col_ll, plat_fit_ll =  \
+        decide_color( data_eff_ll[:,1], data_fit_ll[:,1],
+            thresh = p_decid_thresh, 
+            green = p_decid_green,
+            orange = p_decid_orange 
+        )
+    
+    col_ss, plat_fit_ss =  \
+        decide_color( data_eff_ss[:,1], data_fit_ss[:,1],
+            thresh = p_decid_thresh, 
+            green = p_decid_green,
+            orange = p_decid_orange 
+        )
+    # Decide whether ll and ss are equal or not
+    
+    # Clean the data for both files
+    init = int( max( data_fit_ll[0,0], data_fit_ss[0,0] ) )
+    end = int( min( data_fit_ll[-1,0], data_fit_ss[-1,0] ) )
+    
+    data_fit_ss = data_fit_ss[init:end,:]
+    data_fit_ll = data_fit_ll[init:end,:]
+    
+    yes_no = equal_or_not( data_fit_ll[:,1], data_fit_ss[:,1],
+            thresh = p_equal_thresh, perc_data = p_equal_perc )
+    
+    print( col_ll, plat_fit_ll, col_ss, plat_fit_ss, yes_no )
