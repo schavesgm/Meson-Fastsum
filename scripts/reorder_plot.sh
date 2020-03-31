@@ -8,7 +8,7 @@ case $1 in
 esac
 
 case $2 in 
-    'g5') echo "Analysing Pseudoscalar"; chan='0^{+-}' ;;
+    'g5') echo "Analysing Pseudoscalar"; chan='0^{-+}' ;;
     'vec') echo "Analysing Vector"; chan='1^{--}' ;;
     'ax_plus') echo "Analysing Axial_plus"; chan='1^{++}' ;;
     'ax_minus') echo "Analysing Axial_minus"; chan='1^{+-}' ;;
