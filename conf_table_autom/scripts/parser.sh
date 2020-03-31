@@ -1,9 +1,18 @@
 function print_help() {
     printf "USE: In order to use the script, run the following
     command.
-                bash master.sh -p p0,p1,...,p0 
+                bash master.sh -p p0,p1,...,p7 
     Information about each parameter can be retrieved by using the
-    command 'bash master.sh -ip'.
+    command 'bash master.sh -ip'. If you wanted to generate a table
+    without changing the parameters, you can use the following flag,
+                    bash master.sh -t
+    If you wanted to name the table in another way than the default 
+    one 'table_results.tex', you can pass the argument '-n' to the 
+    script. For example,
+            bash master.sh -n '01' -p p0,p1,...,p7
+    will generate a file called 'table_01.tex'.
+
+    Read the README.md attached for more information.
     " 
     exit 1
 }
