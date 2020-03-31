@@ -7,10 +7,15 @@ The subfolders in this folder contain different plots.
 * ax_minus - Ax_minus - Corresponds to 1+-
 * g0 - Scalar - Corresponds to 0++
 
-## `plots_conf_cosh`
+## `Plots_llss_coshFit`
 Plots for all channels showing the effective mass and sliding window
-fit.
+fit. 
 
-## `plots_temperature_mass
+## `Plots_mass_tdepen`
 Plots for all channels showing the estimate on the mass extracted
-through a sliding window procedure.
+through a sliding window procedure as a function of the temperature.
+
+## `Plots_corr_norm`
+Plots of the correlation function for all channels and flavour
+structures. Each plots shows the correlation function for all
+available temperatures.
