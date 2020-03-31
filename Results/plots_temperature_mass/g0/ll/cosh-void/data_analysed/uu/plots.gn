@@ -1,0 +1,22 @@
+
+file='params_uu_Scalar_ll_cosh-void_20000_36.dat'
+
+# Set the style of the lines
+set style line 1 lc rgb '#CD071E' pt 1 ps 1 lt 1 lw 2
+set style line 2 lc rgb '#90CD071E' pt 1 ps 1 lt 1 lw 2
+
+set style line 11 lc rgb '#808080' lt 1
+set border 3 back ls 11
+set tics nomirror
+
+set style line 12 lc rgb '#808080' lt 0 lw 1
+set grid back ls 12
+
+# Set labels and titles
+set xlabel '$\frac{\tau}{N_\tau\cdot a_\tau}$'
+set ylabel '$\Phi \cdot a_\tau$'
+set title '$uu - void - 0^{++} - ll$'
+
+plot file u (1/$1):4:5 w yerr ls 1 notitle, \
+     file u (1/$1):4 w l ls 2 notitle
+
