@@ -132,7 +132,8 @@ for src in ${SOURCE[@]}; do
             # Rescale everything
             awk -v nt=${nt} -v rval=${res_val} -v rerr=${res_err} \
                 'NR > 1 { 
-                    print $1/nt " " (1/nt) * log($2/rval) " " \
+                    print $1/nt " " \
+                    (1/nt) * log(sqrt(($2/rval)**2)) " " \
                     (1/nt) * sqrt ( \
                         (rerr/rval) ** 2 + \
                         ($3/$2) ** 2 - \
@@ -150,6 +151,26 @@ for src in ${SOURCE[@]}; do
         rm plot_it.gn
         cd ${ROOT}
     done
+done
+
+# Unite all the pdfs into a folder
+mkdir -p plot_corr/Plots
+for src in ${SOURCE[@]}; do
+
+    # Create a folder to hold the source data
+    pdf_file="plots_corrNorm_${chan}_${src}.pdf"
+
+    # Copy all pdf files inside the folder
+    cp plot_corr/${src}/*/plot_corrNorm_*.pdf plot_corr/Plots
+
+    # Unite the data
+    # ( cd plot_corr/Plots ; pdfunite $( ls * |  sort -Vr ) ${pdf_file} )
+    (cd plot_corr/Plots ; \
+        pdfunite $(ls plot_corrNorm_*|sort -Vr) ${pdf_file} )
+
+    # Remove the plot files
+    ( cd plot_corr/Plots ; rm plot_corrNorm_* )
+
 done
 
 
