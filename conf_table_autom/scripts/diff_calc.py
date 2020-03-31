@@ -1,6 +1,5 @@
 import sys, argparse 
 import numpy as np
-import matplotlib.pyplot as plt
 
 def equal_or_not( data_ll, data_ss, thresh = 0.2, perc_data = 0.5 ):
     ''' 
